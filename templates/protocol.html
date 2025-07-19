@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protocol Simulation - ZKP Demo</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Interactive ZKP Protocol Simulation</h1>
+        <div class="card mb-4">
+            <div class="card-body">
+                <button class="btn btn-primary mb-2" id="step1">Generate Keypair</button>
+                <div id="result-step1"></div>
+                
+                <button class="btn btn-info mb-2" id="step2">Generate Commitment</button>
+                <div id="result-step2"></div>
+                
+                <button class="btn btn-warning mb-2" id="step3">Generate Challenge</button>
+                <div id="result-step3"></div>
+                
+                <button class="btn btn-secondary mb-2" id="step4">
+                    Compute Response (Requires r, x, and challenge)
+                </button>
+                <div id="result-step4"></div>
+                
+                <button class="btn btn-success mb-2" id="verify">
+                    Verify Schnorr Proof (Requires t, s, challenge, and y)
+                </button>
+                <div id="result-verify"></div>
+            </div>
+        </div>
+        <div class="text-center">
+            <a href="{{ url_for('index') }}" class="btn btn-secondary">Back to Home</a>
+        </div>
+    </div>
+    
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+    let globalData = {}; // Stores intermediate values
+
+    $('#step1').click(function() {
+        $.getJSON('{{ url_for("protocol_step1") }}', function(data) {
+            globalData.x = data.private_key;
+            globalData.y = data.public_key;
+            $('#result-step1').html(
+                `<p>Private Key (x): ${data.private_key}</p>
+                 <p>Public  Key (y): ${data.public_key}</p>`
+            );
+        });
+    });
+
+    $('#step2').click(function() {
+        $.getJSON('{{ url_for("protocol_step2") }}', function(data) {
+            globalData.r = data.r;
+            globalData.t = data.commitment;
+            $('#result-step2').html(
+                `<p>Nonce (r): ${data.r}</p>
+                 <p>Commitment (t): ${data.commitment}</p>`
+            );
+        });
+    });
+
+    $('#step3').click(function() {
+        $.getJSON('{{ url_for("protocol_step3") }}', function(data) {
+            globalData.c = data.challenge;
+            $('#result-step3').html(
+                `<p>Challenge (c): ${data.challenge}</p>`
+            );
+        });
+    });
+
+    $('#step4').click(function() {
+        if (!globalData.r || !globalData.x || !globalData.c) {
+            $('#result-step4').html('<p class="text-danger">Missing r, x, or challenge value.</p>');
+            return;
+        }
+        $.ajax({
+            url: '{{ url_for("protocol_step4") }}',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ r: globalData.r, x: globalData.x, c: globalData.c }),
+            success: function(data) {
+                globalData.s = data.response;
+                $('#result-step4').html(
+                    `<p>Response (s): ${data.response}</p>`
+                );
+            }
+        });
+    });
+
+    $('#verify').click(function() {
+        if (!globalData.t || !globalData.s || !globalData.c || !globalData.y) {
+            $('#result-verify').html('<p class="text-danger">Missing t, s, challenge or public key (y).</p>');
+            return;
+        }
+        $.ajax({
+            url: '{{ url_for("protocol_verify") }}',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ t: globalData.t, s: globalData.s, c: globalData.c, y: globalData.y }),
+            success: function(data) {
+                $('#result-verify').html(
+                    `<p>Schnorr Proof Verification: ${data.valid ? '<span class="text-success">Valid</span>' : '<span class="text-danger">Invalid</span>'}</p>`
+                );
+            }
+        });
+    });
+    </script>
+</body>
+</html>

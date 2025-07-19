@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZKP Demo</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container text-center mt-5">
+        <h1 class="mb-4">Zero-Knowledge Proof Demo</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-5 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Register</h3>
+                        <p>Create a new account.</p>
+                        <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg">Register</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Authenticate</h3>
+                        <p>Login to your account.</p>
+                        <a href="{{ url_for('authenticate') }}" class="btn btn-success btn-lg">Authenticate</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
