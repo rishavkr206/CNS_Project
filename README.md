@@ -2,7 +2,7 @@
 
 Welcome to the CNS Project repository!
 
-This project is an implementation focused on concepts from Computer Network Security (CNS), using HTML, Python, and CSS. It is designed to demonstrate practical applications of network security principles, protocols, or tools, and can serve as a learning resource or a foundational base for further development.
+This project provides an implementation focused on concepts from Computer Network Security (CNS), using HTML, Python, and CSS. It is designed to demonstrate practical applications of network security principles, protocols, and tools, and can serve as a learning resource or a foundational base for further development.
 
 ## Table of Contents
 
@@ -11,6 +11,7 @@ This project is an implementation focused on concepts from Computer Network Secu
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
 - [Usage](#usage)
+- [Analysis & Efficiency Comparison](#analysis--efficiency-comparison)
 - [Project Structure](#project-structure)
 - [Contributing](#contributing)
 - [License](#license)
@@ -25,6 +26,7 @@ The CNS Project provides a hands-on approach to understanding and implementing n
 - Python scripts for backend logic and network operations
 - Demonstrations of various CNS concepts (e.g., encryption/decryption, authentication)
 - Modular and extensible codebase
+- **Analysis section to compare traditional and proposed methods, with efficiency metrics**
 
 ## Tech Stack
 
@@ -72,6 +74,17 @@ The CNS Project provides a hands-on approach to understanding and implementing n
 - Interact with the web interface for demos and practical exercises.
 - Run backend scripts for specific network security operations.
 - Explore code to understand the implementation of various security mechanisms.
+- Use the analysis section to compare the traditional and proposed methods, and examine their efficiency.
+
+## Analysis & Efficiency Comparison
+
+This project includes an **Analysis** component that demonstrates the differences between traditional network security methods and the approach implemented in this project ("the proposed method"). 
+
+- **Traditional Method:** Showcases how security tasks were handled before, highlighting limitations and drawbacks.
+- **Proposed Method:** Illustrates the improvements or changes introduced by this project.
+- **Efficiency Metrics:** Provides a comparative analysis (such as speed, resource usage, or security strength) to quantify the benefits of the proposed approach.
+
+You can find detailed analysis results, graphs, or tables in the `analysis` section of the project, helping to visualize and understand the efficiency gains.
 
 ## Project Structure
 
@@ -81,6 +94,7 @@ CNS_Project/
 ├── [HTML files]         # Web interface pages
 ├── [Python scripts]     # Backend logic and simulations
 ├── [CSS files]          # Styling for the web interface
+├── analysis/            # Contains analysis and efficiency comparison materials
 ├── requirements.txt     # Python dependencies (if available)
 └── README.md            # Project documentation
 ```
